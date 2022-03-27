@@ -1,28 +1,25 @@
 # Imports
 import sys
-
+import time
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from xgboost import XGBClassifier
+from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import Pipeline
 from scipy import stats
 from scipy.stats import pointbiserialr, chi2, chi2_contingency
-from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV, StratifiedKFold, train_test_split
+from sklearn.preprocessing import StandardScaler
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
+from sklearn.metrics import roc_curve, roc_auc_score, classification_report, precision_recall_curve, \
+    average_precision_score, auc, f1_score, accuracy_score, recall_score, precision_score, \
+    confusion_matrix, make_scorer
 
-# from imblearn.pipeline import Pipeline
-# from imblearn.over_sampling import SMOTE
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.ensemble import RandomForestClassifier
-# from xgboost import XGBClassifier
-# from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-# from sklearn.model_selection import GridSearchCV, StratifiedKFold
-# from sklearn.linear_model import SGDClassifier
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.metrics import roc_curve, roc_auc_score, classification_report, precision_recall_curve, \
-#     average_precision_score, auc, f1_score, accuracy_score, recall_score, precision_score, \
-#     confusion_matrix
 # ------------------------------------------------------------------------
 # Data Cleaning and pre-processing
 # 1. Check for missing data
@@ -282,11 +279,91 @@ print(' after removing outliers', df.shape)
 # More data pre-processing: Create dummy variables for categorical data
 # ------------------------------------------------------------------------------------
 # Create dummy variables and drop first for categorical data to avoid perfect multicollinearity
-df_final = pd.get_dummies(df, columns=df_cat.columns, drop_first=True)
+df_final = pd.get_dummies(df, columns=df_cat.columns, drop_first=False)
 
 # --------------------------------------------------------------------------------------
 #  Train, Test Split:
 # --------------------------------------------------------------------------------------
 X = df_final.drop(['def'], axis=1)
 y = df_final[['def']]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1, stratify=y)
+
+# Check percentage of default event
+print(y_train['def'].sum() / len(y_train))
+print(y_test['def'].sum() / len(y_test))
+
+# print(y[y.isnull().any(axis=1)])
+# print(X[X.isnull().any(axis=1)])
+# ----------------------------------------------------------------------------------------------
+# Model Selection
+# 1. XGBoost
+# 2. Random Forest
+# -----------------------------------------------------------------------------------------------
+# --------------------------------- 1. XGBoost --------------------------------------
+# Model parameter selection:
+scoring = 'roc_auc'
+
+# SMOTE
+# 1. imbalance data, 22.7% default rate
+
+stratified_kfold = StratifiedKFold(n_splits=3,
+                                   shuffle=True,
+                                   random_state=1)
+
+pipeline_xgb = Pipeline(steps=[['smote', SMOTE(random_state=1)],
+                               ['scaler', StandardScaler()],
+                               ['classifier', XGBClassifier(objective='binary:logistic',
+                                                            use_label_encoder=False,
+                                                            missing=1,
+                                                            seed=1,
+                                                            subsample=0.8,
+                                                            colsample_bytree=0.5)]])
+
+# ['smote', SMOTE(random_state=1)],
+# clf_xgb = XGBClassifier(objective='binary:logistic',
+#                         missing=None,
+#                         seed=1)
+# clf_xgb.fit(X_train, y_train,
+#             verbose=True,
+#             early_stopping_rounds=10,
+#             eval_metric='aucpr',
+#             eval_set=[(X_test, y_test)])
+
+# param_grid_xgb = {'max_depth': [3, 4, 5],
+#                   'learning_rate': [0.1, 0.2],
+#                   'gamma': [0, 0.1, 0.15],
+#                   'reg_lambda': [0, 0.05, 0.1],
+#                   'scale_pos_weight': [1, 2, 2.5]}
+
+param_grid_xgb = {'classifier__max_depth': [3, 4, 5, 6],
+                  'classifier__learning_rate': [0.1, 0.2, 0.3],
+                  'classifier__gamma': [0, 0.1, 0.15],
+                  'classifier__reg_lambda': [0.1, 0.2，0.3, 0.4]}
+
+grid_xgb = GridSearchCV(estimator=pipeline_xgb,
+                        param_grid=param_grid_xgb,
+                        scoring=scoring,
+                        n_jobs=-1,
+                        cv=stratified_kfold,
+                        verbose=1)
+
+grid_xgb.fit(X_train, y_train.values.ravel())
+
+print(grid_xgb.best_params_)
+cv_score_xgb = grid_xgb.best_score_
+test_score_xgb = grid_xgb.score(X_test, y_test)
+xgbpred = grid_xgb.predict(X_test)
+
+print(f'xgb Best Estimator: {grid_xgb.best_estimator_}\n'
+      f'xgb Cross-validation score: {cv_score_xgb}\n'
+      f'xgb Test score: {test_score_xgb}\n'
+      )
+
+print(
+    f'xgbAccuracy = {accuracy_score(y_test, xgbpred): .2f}\n'
+    f'xgb Recall = {recall_score(y_test, xgbpred): .2f}\n'
+    f'xgb Precision = {precision_score(y_test, xgbpred): .2f}\n'
+    f'xgb F1 = {f1_score(y_test, xgbpred): .2f}\n'
+)
+
+# --------------------------------- 2. Random Forest --------------------------------------
