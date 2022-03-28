@@ -144,7 +144,7 @@ print(df.describe())
 1. Preliminary Screening - Uni-variate and Bi-variate Analysis
   - Compute Point Bi-serial Correlation for Categorical Y vs Continuous X
   - Compute Chi-squared statistics for Categorical Y vs Categorical
-  - 
+  - Univarant analysis graphs - (Numerical variables -> Box plots, Distribution plots | Categorical variables -> Bar plots 
 ```
 # Divide into 1.Categorical 2.Numerical 3.Dependent Variables
 df_X = df.drop(['def'], axis=1)
@@ -272,6 +272,12 @@ prescreen(df, df_def, df_num, df_cat, isnum=True)
 prescreen(df, df_def, df_num, df_cat, isnum=False)
 ```
 
+<details><summary>Click to view univariant analysis graphs</summary>
+<p>
+
+#### Below is resulting univarant analysis graphs - (Numerical variables -> Box plots, Distribution plots | Categorical variables -> Bar plots  
+
+
 ![AGEbox_plot](https://user-images.githubusercontent.com/86807275/160311805-83412b37-0d54-4a41-823b-c0bcf7a42ab2.png)
 ![AGEdist_plot](https://user-images.githubusercontent.com/86807275/160311824-23df68a0-3e40-480f-b81b-f9b836f5129f.png)
 ![BILL_AMT1box_plot](https://user-images.githubusercontent.com/86807275/160311933-a06d025b-681e-48d4-8e19-f2ce33238551.png)
@@ -327,6 +333,11 @@ prescreen(df, df_def, df_num, df_cat, isnum=False)
 ![UTIL5dist_plot](https://user-images.githubusercontent.com/86807275/160312206-a2ee78fd-3c94-4b81-861a-d378d21b119e.png)
 ![UTIL6box_plot](https://user-images.githubusercontent.com/86807275/160312207-1cc16db8-13a7-4d2b-9b45-c46886ca1ebf.png)
 ![UTIL6dist_plot](https://user-images.githubusercontent.com/86807275/160312208-18089d82-8aea-47d6-93ae-ea32f6912312.png)
+
+    ```
+
+</p>
+</details>
 
 2. Filter Multicollinearity
 ```
