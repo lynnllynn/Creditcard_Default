@@ -77,6 +77,8 @@ for p in cc_default_plot.patches:
 plt.savefig('Default_Count_plot.png', bbox_inches='tight')
 plt.close()
 ```
+<img src="https://user-images.githubusercontent.com/86807275/160313634-759aa796-7f0f-40ca-b470-06264a4620b9.png" width="600" height="500">
+
 3. Format modification
 ```
 df.rename(columns={'default.payment.next.month': 'def'}, inplace=True)
