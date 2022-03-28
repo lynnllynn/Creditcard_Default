@@ -152,7 +152,7 @@ print(df.describe())
 ```
 
 ### Data Exploration
-1. Preliminary Screening - Uni-variate and Bi-variate Analysis
+##### 1. Preliminary Screening - Uni-variate and Bi-variate Analysis
   - Compute Point Bi-serial Correlation for Categorical Y vs Continuous X
     - Selection Criteria: abs(PBC Corr) > 0.05 and p-value < 0.05
     - Only retain numerical variables that have significant correlation with target event
@@ -350,12 +350,24 @@ prescreen(df, df_def, df_num, df_cat, isnum=False)
 ![UTIL6box_plot](https://user-images.githubusercontent.com/86807275/160312207-1cc16db8-13a7-4d2b-9b45-c46886ca1ebf.png)
 ![UTIL6dist_plot](https://user-images.githubusercontent.com/86807275/160312208-18089d82-8aea-47d6-93ae-ea32f6912312.png)
 
-    ```
-
 </p>
 </details>
 
-2. Filter Multicollinearity
+<details><summary>Click to view Chi-Sq test results </summary>
+<p>
+    [Chi-Squared Test Results.csv](https://github.com/lynnllynn/Creditcard_default/files/8362603/Chi-Squared.Test.Results.csv)
+</p>
+</details>
+
+<details><summary>Click to view Point Bi-serial Correlation test results </summary>
+<p>
+    [Point Biserial Correlation Test Results.csv](https://github.com/lynnllynn/Creditcard_default/files/8362608/Point.Biserial.Correlation.Test.Results.csv)
+</p>
+</details>
+
+##### 2. Filter Multicollinearity
+- Remove variables that are highly correlation in order to satisfy logistic regression assumptions
+- VIF test results [VIF.txt](https://github.com/lynnllynn/Creditcard_default/files/8362705/VIF.txt)
 ```
 # Check for multicollinearity
 X = add_constant(df_num)
@@ -380,7 +392,16 @@ corr = sns.heatmap(df_num.corr(), annot=True)
 plt.savefig('Corr1_plot.png', bbox_inches='tight')
 plt.close()
 ```
-3. Outlier filter
+<details><summary>Click to view multicollinearity test graphs</summary>
+<p>
+#### Below is Correlation heat maps
+![Corr_plot](https://user-images.githubusercontent.com/86807275/160397405-1ff527ab-978a-44f1-8914-65fa19a80e0d.png)
+![Corr1_plot](https://user-images.githubusercontent.com/86807275/160397408-51f7939a-5ed8-4188-8ad1-a1802c48cd74.png)
+ ```
+</p>
+</details>
+
+##### 3. Outlier filter
 ```
 # Detect and drop outliers using 3 std threshold
 print(' Before removing outliers', df.shape)
