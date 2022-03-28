@@ -58,12 +58,14 @@ from sklearn.metrics import roc_curve, roc_auc_score, classification_report, pre
 ```
 ### Data Cleaning and pre-processing
 
-1. Check for missing data
+##### 1. Check for missing data
 ```
 pct_missing = df.isnull().mean().round(4).mul(100).sort_values(ascending=False)  # no missing
 print(pct_missing)
 ```
-2. Check for imbalanced data
+There is no missing data points in this dataset
+
+##### 2. Check for imbalanced data
 ```
 plt.figure(figsize=(12, 10))
 plt.title('Default Credit Card \n (Default = 1, Not Default = 0')
@@ -77,9 +79,12 @@ for p in cc_default_plot.patches:
 plt.savefig('Default_Count_plot.png', bbox_inches='tight')
 plt.close()
 ```
+- This dataset is imbalanced
 <img src="https://user-images.githubusercontent.com/86807275/160313634-759aa796-7f0f-40ca-b470-06264a4620b9.png" width="600" height="500">
 
-3. Format modification
+##### 3. Format modification
+- Change payment indicators, sex, education, marriage status to categorical variable
+- Need to drop customer ID as it does not contain any useful information
 ```
 df.rename(columns={'default.payment.next.month': 'def'}, inplace=True)
 # change payment indicators, sex, education, marriage status to categorical variable
@@ -96,7 +101,9 @@ for i in (0, 2, 3, 4, 5, 6):
     df[pay] = df[pay].apply(lambda x: -1 if (x == -2 or 0) else x)
 
 ```
-4. Preliminary feature engineering
+##### 4. Preliminary feature engineering
+- compute utilization rate, which is a good indicator of the borrower's account status
+- compute utilization rate increase indicator - continuously increasing utilization rate signals financial stress
 ```
 # compute utilization rate, which is a good indicator of the borrower's account status
 for i in range(1, 7):
@@ -129,7 +136,9 @@ df['cons_util_inc'].fillna(0, inplace=True)
 df = df[df.columns.drop(list(df.filter(regex='mths_inc_')))]
 print(df)
 ```
-5. Cap and floor certain variables
+##### 5. Cap and floor certain variables
+- Floor negative bill balances (bill credits) at 0
+- Floor negative utilization rates at 0
 ```
 # Floor negative bill balances (bill credits) at 0
 # Floor negative utilization rates at 0
