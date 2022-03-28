@@ -144,6 +144,7 @@ print(df.describe())
 1. Preliminary Screening - Uni-variate and Bi-variate Analysis
   - Compute Point Bi-serial Correlation for Categorical Y vs Continuous X
   - Compute Chi-squared statistics for Categorical Y vs Categorical
+  - 
 ```
 # Divide into 1.Categorical 2.Numerical 3.Dependent Variables
 df_X = df.drop(['def'], axis=1)
@@ -270,6 +271,63 @@ def prescreen(datain, defdata, numdata, catdata, isnum=True):
 prescreen(df, df_def, df_num, df_cat, isnum=True)
 prescreen(df, df_def, df_num, df_cat, isnum=False)
 ```
+
+![AGEbox_plot](https://user-images.githubusercontent.com/86807275/160311805-83412b37-0d54-4a41-823b-c0bcf7a42ab2.png)
+![AGEdist_plot](https://user-images.githubusercontent.com/86807275/160311824-23df68a0-3e40-480f-b81b-f9b836f5129f.png)
+![BILL_AMT1box_plot](https://user-images.githubusercontent.com/86807275/160311933-a06d025b-681e-48d4-8e19-f2ce33238551.png)
+![BILL_AMT1dist_plot](https://user-images.githubusercontent.com/86807275/160311940-3e4c51d7-450f-4047-8f36-8fed03aa10e4.png)
+![BILL_AMT2box_plot](https://user-images.githubusercontent.com/86807275/160311944-20b33e87-0b42-44de-b50a-8f15276b84e4.png)
+![BILL_AMT2dist_plot](https://user-images.githubusercontent.com/86807275/160311960-3da4fc19-a788-4f67-849d-cd0f03c14396.png)
+![BILL_AMT4box_plot](https://user-images.githubusercontent.com/86807275/160312144-1a541266-d505-42c6-b4bf-d0714fab463c.png)
+![BILL_AMT4dist_plot](https://user-images.githubusercontent.com/86807275/160312147-2f2c11e1-d7a3-45a2-a067-6ec4f0861003.png)
+![BILL_AMT5box_plot](https://user-images.githubusercontent.com/86807275/160312149-199eec43-fc2d-4890-a104-9c5bbcab7cb1.png)
+![BILL_AMT5dist_plot](https://user-images.githubusercontent.com/86807275/160312150-90de3b13-10c8-4d53-9641-5ba6db7b2d82.png)
+![BILL_AMT6box_plot](https://user-images.githubusercontent.com/86807275/160312151-286067da-c1f2-4b1c-8deb-7ac73cdce487.png)
+![BILL_AMT6dist_plot](https://user-images.githubusercontent.com/86807275/160312152-dbfecfff-267c-4059-a746-ad51f1e0aead.png)
+![cons_util_incbox_plot](https://user-images.githubusercontent.com/86807275/160312153-d3ee4acb-1652-43ff-b483-fc16c5468484.png)
+![cons_util_incdist_plot](https://user-images.githubusercontent.com/86807275/160312154-021f5cf9-b5c0-4e87-8e1d-9c40522737a3.png)
+![EDUCATION_pct_plot](https://user-images.githubusercontent.com/86807275/160312155-d14e486c-bc6a-4c9f-a796-9308f480d137.png)
+![LIMIT_BALbox_plot](https://user-images.githubusercontent.com/86807275/160312156-82edf534-6fd5-4cde-b5a5-b872ca6262c1.png)
+![LIMIT_BALdist_plot](https://user-images.githubusercontent.com/86807275/160312157-3779e832-0bf9-4927-82f8-80fbbd6010d0.png)
+![MARRIAGE_pct_plot](https://user-images.githubusercontent.com/86807275/160312158-335b075e-e720-4c1f-a957-17b7caaca65d.png)
+![PAY_0box_plot](https://user-images.githubusercontent.com/86807275/160312159-2f7b14e1-4efc-496f-b704-2c597065b33e.png)
+![PAY_0dist_plot](https://user-images.githubusercontent.com/86807275/160312160-65ec94e7-fe9f-4c0f-b884-443c763c5b90.png)
+![PAY_2box_plot](https://user-images.githubusercontent.com/86807275/160312161-cfdf3231-408b-4e77-b3d8-6d9878f81884.png)
+![PAY_2dist_plot](https://user-images.githubusercontent.com/86807275/160312162-3ec1241f-9603-4ea8-bc0f-4b749db59057.png)
+![PAY_3box_plot](https://user-images.githubusercontent.com/86807275/160312163-c0afcdd5-21bf-4158-baf0-bb0083f5728f.png)
+![PAY_3dist_plot](https://user-images.githubusercontent.com/86807275/160312164-32d313de-1649-4bf1-97f6-c8c3beadf690.png)
+![PAY_4box_plot](https://user-images.githubusercontent.com/86807275/160312165-95154076-6aa5-48cd-af8d-fd3a20fb2acd.png)
+![PAY_4dist_plot](https://user-images.githubusercontent.com/86807275/160312168-0c9e1494-dcce-4a9d-8816-77501ee75cde.png)
+![PAY_5box_plot](https://user-images.githubusercontent.com/86807275/160312169-1bc8aba4-3a57-48ce-b679-05a3cc35fb4b.png)
+![PAY_5dist_plot](https://user-images.githubusercontent.com/86807275/160312171-bc25e422-b3c2-46c6-bfe7-d441299a2717.png)
+![PAY_6box_plot](https://user-images.githubusercontent.com/86807275/160312172-6a51e7a0-b6d8-40c8-a028-dcec78eb2d24.png)
+![PAY_6dist_plot](https://user-images.githubusercontent.com/86807275/160312175-e297e84a-b3e0-4e8d-8e7d-b1f1cbcf704d.png)
+![PAY_AMT1box_plot](https://user-images.githubusercontent.com/86807275/160312176-05fa6006-ee9d-43ec-af36-89a16ee76871.png)
+![PAY_AMT1dist_plot](https://user-images.githubusercontent.com/86807275/160312178-69cadb5f-041b-4cd9-a250-cfc5840e8e20.png)
+![PAY_AMT2box_plot](https://user-images.githubusercontent.com/86807275/160312179-dbe9fc86-d8de-4d31-9857-52f53bb7f3fe.png)
+![PAY_AMT2dist_plot](https://user-images.githubusercontent.com/86807275/160312180-a1302b02-4ee7-4582-bbd0-7255ed8abf0e.png)
+![PAY_AMT3box_plot](https://user-images.githubusercontent.com/86807275/160312181-7c099dd2-8431-4d4d-a455-b03b1c937476.png)
+![PAY_AMT3dist_plot](https://user-images.githubusercontent.com/86807275/160312182-92bbe5f8-0aae-4c89-aa92-1fccd2ea08c6.png)
+![PAY_AMT4box_plot](https://user-images.githubusercontent.com/86807275/160312184-42260718-0099-4b2c-8681-086c7c486eed.png)
+![PAY_AMT4dist_plot](https://user-images.githubusercontent.com/86807275/160312185-9e8b0144-f77c-49ca-b69f-2ab4b5fff2d7.png)
+![PAY_AMT5box_plot](https://user-images.githubusercontent.com/86807275/160312186-6eb210fe-d1d7-4e3b-860b-fca6004b1175.png)
+![PAY_AMT5dist_plot](https://user-images.githubusercontent.com/86807275/160312189-5f9ce32b-14f8-4315-af89-407551d55c03.png)
+![PAY_AMT6box_plot](https://user-images.githubusercontent.com/86807275/160312190-22981ee7-a813-426c-859c-c914e117a0ee.png)
+![PAY_AMT6dist_plot](https://user-images.githubusercontent.com/86807275/160312191-90a2fd1e-bfd9-4779-9ed1-f5432ca12fd1.png)
+![SEX_pct_plot](https://user-images.githubusercontent.com/86807275/160312193-ddbf564b-c4a6-4ea8-b57a-dcef17a82b9b.png)
+![UTIL1box_plot](https://user-images.githubusercontent.com/86807275/160312194-64f0021f-9e5b-4415-bcc8-12bcb85dc9e0.png)
+![UTIL1dist_plot](https://user-images.githubusercontent.com/86807275/160312195-9499b51d-eaaa-4fe0-831a-14f632e25065.png)
+![UTIL2box_plot](https://user-images.githubusercontent.com/86807275/160312197-c7d7f769-6f0d-434b-84ac-d638337eb7b9.png)
+![UTIL2dist_plot](https://user-images.githubusercontent.com/86807275/160312198-15422372-e950-42da-9413-372a05373722.png)
+![UTIL3box_plot](https://user-images.githubusercontent.com/86807275/160312200-bffd3c14-2ce3-4b27-8c4a-04c5fcbff0f7.png)
+![UTIL3dist_plot](https://user-images.githubusercontent.com/86807275/160312201-b00841a9-3ad7-422c-ad58-91bc3ec60a24.png)
+![UTIL4box_plot](https://user-images.githubusercontent.com/86807275/160312202-84adba56-1f4f-4734-9cc0-560ec3e8b5dd.png)
+![UTIL4dist_plot](https://user-images.githubusercontent.com/86807275/160312204-97953216-f047-4320-90e1-847e37b073ed.png)
+![UTIL5box_plot](https://user-images.githubusercontent.com/86807275/160312205-e9fb7e99-bce7-45c5-b1d8-21064d7587fb.png)
+![UTIL5dist_plot](https://user-images.githubusercontent.com/86807275/160312206-a2ee78fd-3c94-4b81-861a-d378d21b119e.png)
+![UTIL6box_plot](https://user-images.githubusercontent.com/86807275/160312207-1cc16db8-13a7-4d2b-9b45-c46886ca1ebf.png)
+![UTIL6dist_plot](https://user-images.githubusercontent.com/86807275/160312208-18089d82-8aea-47d6-93ae-ea32f6912312.png)
+
 2. Filter Multicollinearity
 ```
 # Check for multicollinearity
@@ -350,3 +408,4 @@ Any publications based on this dataset should acknowledge the following:
 Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
 
 The original dataset can be found here at the UCI Machine Learning Repository.
+
