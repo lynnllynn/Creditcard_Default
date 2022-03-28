@@ -154,8 +154,13 @@ print(df.describe())
 ### Data Exploration
 1. Preliminary Screening - Uni-variate and Bi-variate Analysis
   - Compute Point Bi-serial Correlation for Categorical Y vs Continuous X
+    - Selection Criteria: abs(PBC Corr) > 0.05 and p-value < 0.05
+    - Only retain numerical variables that have significant correlation with target event
   - Compute Chi-squared statistics for Categorical Y vs Categorical
+    - Selection Criteria: Chi-Sq test stat > critical value and p-value < 0.05
+    - Only retain categorical variables that are not proven to be independent with target event
   - Univarant analysis graphs - (Numerical variables -> Box plots, Distribution plots | Categorical variables -> Bar plots 
+ 
 ```
 # Divide into 1.Categorical 2.Numerical 3.Dependent Variables
 df_X = df.drop(['def'], axis=1)
