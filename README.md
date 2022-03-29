@@ -569,7 +569,7 @@ print(
     f'log F1 = {f1_score(y_test, logpred): .2f}\n'
 )
 ```
-### Model Performance
+### Model Performance Metrics
 ##### XGBoost
 | Performance metrics  | Score |
 | -------------------- | ----- |
@@ -600,8 +600,11 @@ print(
 | Test Precision       | 0.38  |
 | Test F1              | 0.45  |
 
-##### Conclusion
-XGBoost performed the best
+XGBoost obtained the highest training and testing ROC scores. Note that Random Forest and XGBoost obtained similar F1 scores, but Random Forest had higher recall. Will take a closer look at their results by plotting Precision-Recall curves.
+
+#### Random Forest VS XGBoost Performance Comparsion
+
+
 
 ## Acknowledgements
 Any publications based on this dataset should acknowledge the following:
