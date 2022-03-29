@@ -430,7 +430,7 @@ print(y_test['def'].sum() / len(y_test))
 ```
 ### Models
 Model scoring meterics selection:
-scoring = 'roc_auc'
+scoring = 'roc_auc' 
 
 Modeling pipeline:
 1. Use SMOTE
@@ -443,13 +443,160 @@ Modeling pipeline:
 
 #### 1. XGBoost
 ```
+# --------------------------------- 1. XGBoost --------------------------------------
+# Model parameter selection:
+scoring = 'roc_auc'
+
+# SMOTE
+# 1. imbalance data, 22.7% default rate
+
+stratified_kfold = StratifiedKFold(n_splits=3,
+                                   shuffle=True,
+                                   random_state=1)
+
+pipeline_xgb = Pipeline(steps=[['smote', SMOTE(random_state=1)],
+                               ['scaler', StandardScaler()],
+                               ['classifier', XGBClassifier(objective='binary:logistic',
+                                                            use_label_encoder=False,
+                                                            missing=1,
+                                                            seed=1,
+                                                            subsample=0.9,
+                                                            colsample_bytree=0.8)]])
+
+param_grid_xgb = {'classifier__max_depth': [15, 17, 20],
+                  'classifier__learning_rate': [0.01, 0.05, 0.1],
+                  'classifier__gamma': [1, 2, 3, 5],
+                  'classifier__reg_lambda': [30, 40]}
+
+grid_xgb = GridSearchCV(estimator=pipeline_xgb,
+                        param_grid=param_grid_xgb,
+                        scoring=scoring,
+                        n_jobs=-1,
+                        cv=stratified_kfold,
+                        verbose=0)
+
+grid_xgb.fit(X_train, y_train.values.ravel())
+
+cv_score_xgb = grid_xgb.best_score_
+test_score_xgb = grid_xgb.score(X_test, y_test)
+xgbpred = grid_xgb.predict(X_test)
+
+print(f'xgb Best Parameter: {grid_xgb.best_params_}\n'
+      f'xgb Best Estimator: {grid_xgb.best_estimator_}\n'
+      f'xgb Cross-validation score: {cv_score_xgb}\n'
+      f'xgb Test score: {test_score_xgb}\n'
+      )
+
+print(
+    f'xgb Accuracy = {accuracy_score(y_test, xgbpred): .2f}\n'
+    f'xgb Recall = {recall_score(y_test, xgbpred): .2f}\n'
+    f'xgb Precision = {precision_score(y_test, xgbpred): .2f}\n'
+    f'xgb F1 = {f1_score(y_test, xgbpred): .2f}\n'
+)
 ```
 #### 2. Random Forest
 ```
+------------------------------- 2. Random Forest --------------------------------------
+
+pipeline_rfc = Pipeline(steps=[['smote', SMOTE(random_state=1)],
+                               ['scaler', StandardScaler()],
+                               ['classifier', RandomForestClassifier(n_jobs=-1, random_state=1)]])
+
+param_grid_rfc = {"classifier__n_estimators": [100, 200],
+                  "classifier__max_depth": [5, 10, 15, 20],
+                  "classifier__min_samples_leaf": [50, 100],
+                  "classifier__max_leaf_nodes": [150, 200]}
+
+grid_rfc = GridSearchCV(estimator=pipeline_rfc,
+                        param_grid=param_grid_rfc,
+                        scoring=scoring,
+                        cv=stratified_kfold,
+                        n_jobs=-1,
+                        verbose=0)
+
+grid_rfc.fit(X_train, y_train)
+
+cv_score_rfc = grid_rfc.best_score_
+test_score_rfc = grid_rfc.score(X_test, y_test)
+rfcpred = grid_rfc.predict(X_test)
+
+print(f'rfc Best Parameter: {grid_rfc.best_params_}\n'
+      f'rfc Best Estimator: {grid_rfc.best_estimator_}\n'
+      f'rfc Cross-validation score: {cv_score_rfc}\n'
+      f'rfc Test score: {test_score_rfc}\n'
+      )
+
+print(
+    f'rfc Accuracy = {accuracy_score(y_test, rfcpred): .2f}\n'
+    f'rfc Recall = {recall_score(y_test, rfcpred): .2f}\n'
+    f'rfc Precision = {precision_score(y_test, rfcpred): .2f}\n'
+    f'rfc F1 = {f1_score(y_test, rfcpred): .2f}\n'
 ```
 #### 3. Logistic Regression
 ```
+------------------------------- 3. Logistic Regression --------------------------------------
+
+pipeline_log = Pipeline(steps=[['smote', SMOTE(random_state=1)],
+                               ['scaler', StandardScaler()],
+                               ['classifier', LogisticRegression(random_state=1,
+                                                                 max_iter=1000)]])
+
+param_grid_log = {'classifier__C': [0.001, 0.01, 0.1, 1, 10, 100]}
+
+grid_log = GridSearchCV(estimator=pipeline_log,
+                        param_grid=param_grid_log,
+                        scoring=scoring,
+                        cv=stratified_kfold,
+                        n_jobs=-1,
+                        verbose=0)
+
+grid_log.fit(X_train, y_train)
+
+cv_score_log = grid_log.best_score_
+test_score_log = grid_log.score(X_test, y_test)
+logpred = grid_log.predict(X_test)
+
+print(f'log Best Parameter: {grid_log.best_params_}\n'
+      f'log Best Estimator: {grid_log.best_estimator_}\n'
+      f'log Cross-validation score: {cv_score_log}\n'
+      f'log Test score: {test_score_log}\n'
+      )
+
+print(
+    f'log Accuracy = {accuracy_score(y_test, logpred): .2f}\n'
+    f'log Recall = {recall_score(y_test, logpred): .2f}\n'
+    f'log Precision = {precision_score(y_test, logpred): .2f}\n'
+    f'log F1 = {f1_score(y_test, logpred): .2f}\n'
+)
 ```
+### Model Performance
+##### XGBoost
+xgb Cross-validation ROC score: 0.752
+xgb Test ROC score:             0.752
+xgb Test Accuracy score:        0.78
+xgb Test Recall score:          0.49
+xgb Test Precision score:       0.52
+xgb Test F1 score:              0.51
+
+##### Random Forest
+rfc Cross-validation ROC score: 0.746
+rfc Test ROC score:             0.746
+rfc Test Accuracy score:        0.76
+rfc Test Recall score:          0.55
+rfc Test Precision score:       0.48
+rfc Test F1 score:              0.51
+
+##### Logistic
+log Cross-validation ROC score: 0.698
+log Test ROC score:             0.691
+log Test Accuracy score:        0.70
+log Test Recall score:          0.55
+log Test Precision score:       0.38
+log Test F1 score:              0.45
+
+##### Conclusion
+XGBoost performed the best
+
 ## Acknowledgements
 Any publications based on this dataset should acknowledge the following:
 
