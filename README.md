@@ -571,28 +571,34 @@ print(
 ```
 ### Model Performance
 ##### XGBoost
-xgb Cross-validation ROC score: 0.752
-xgb Test ROC score:             0.752
-xgb Test Accuracy score:        0.78
-xgb Test Recall score:          0.49
-xgb Test Precision score:       0.52
-xgb Test F1 score:              0.51
+| Performance metrics  | Score |
+| -------------------- | ----- |
+| Cross-validation ROC | 0.752 |
+| Test ROC             | 0.752 |
+| Test Accuracy        | 0.78  |
+| Test Recall          | 0.49  |
+| Test Precision       | 0.52  |
+| Test F1              | 0.51  |
 
 ##### Random Forest
-rfc Cross-validation ROC score: 0.746
-rfc Test ROC score:             0.746
-rfc Test Accuracy score:        0.76
-rfc Test Recall score:          0.55
-rfc Test Precision score:       0.48
-rfc Test F1 score:              0.51
+| Performance metrics  | Score |
+| -------------------- | ----- |
+| Cross-validation ROC | 0.746 |
+| Test ROC             | 0.746 |
+| Test Accuracy        | 0.76  |
+| Test Recall          | 0.55  |
+| Test Precision       | 0.48  |
+| Test F1              | 0.51  |
 
 ##### Logistic
-log Cross-validation ROC score: 0.698
-log Test ROC score:             0.691
-log Test Accuracy score:        0.70
-log Test Recall score:          0.55
-log Test Precision score:       0.38
-log Test F1 score:              0.45
+| Performance metrics  | Score |
+| -------------------- | ----- |
+| Cross-validation ROC | 0.698 |
+| Test ROC             | 0.691 |
+| Test Accuracy        | 0.70  |
+| Test Recall          | 0.55  |
+| Test Precision       | 0.38  |
+| Test F1              | 0.45  |
 
 ##### Conclusion
 XGBoost performed the best
