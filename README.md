@@ -463,11 +463,21 @@ pipeline_xgb = Pipeline(steps=[['smote', SMOTE(random_state=1)],
                                                             subsample=0.9,
                                                             colsample_bytree=0.8)]])
 
-param_grid_xgb = {'classifier__max_depth': [15, 17, 20],
-                  'classifier__learning_rate': [0.01, 0.05, 0.1],
-                  'classifier__gamma': [1, 2, 3, 5],
-                  'classifier__reg_lambda': [30, 40]}
+# param_grid_xgb = {'max_depth': [3, 4, 5],
+#                   'learning_rate': [0.1, 0.2],
+#                   'gamma': [0, 0.1, 0.15],
+#                   'reg_lambda': [0, 0.05, 0.1],
+#                   'scale_pos_weight': [1, 2, 2.5]}
 
+# param_grid_xgb = {'classifier__max_depth': [15, 17, 20],
+#                   'classifier__learning_rate': [0.01, 0.05, 0.1],
+#                   'classifier__gamma': [1, 2, 3, 5],
+#                   'classifier__reg_lambda': [30, 40]}
+
+param_grid_xgb = {'classifier__max_depth': [15],
+                  'classifier__learning_rate': [0.02, 0.03, 0.04],
+                  'classifier__gamma': [2],
+                  'classifier__reg_lambda': [30]}
 grid_xgb = GridSearchCV(estimator=pipeline_xgb,
                         param_grid=param_grid_xgb,
                         scoring=scoring,
@@ -502,10 +512,15 @@ pipeline_rfc = Pipeline(steps=[['smote', SMOTE(random_state=1)],
                                ['scaler', StandardScaler()],
                                ['classifier', RandomForestClassifier(n_jobs=-1, random_state=1)]])
 
+# param_grid_rfc = {"classifier__n_estimators": [100, 200],
+#                   "classifier__max_depth": [5, 10, 15, 20],
+#                   "classifier__min_samples_leaf": [50, 100],
+#                   "classifier__max_leaf_nodes": [150, 200]}
+
 param_grid_rfc = {"classifier__n_estimators": [100, 200],
-                  "classifier__max_depth": [5, 10, 15, 20],
-                  "classifier__min_samples_leaf": [50, 100],
-                  "classifier__max_leaf_nodes": [150, 200]}
+                  "classifier__max_depth": [15, 20],
+                  "classifier__min_samples_leaf": [30, 50],
+                  "classifier__max_leaf_nodes": [200, 300]}
 
 grid_rfc = GridSearchCV(estimator=pipeline_rfc,
                         param_grid=param_grid_rfc,
@@ -576,7 +591,7 @@ print(
 | Cross-validation ROC | 0.752 |
 | Test ROC             | 0.752 |
 | Test Accuracy        | 0.78  |
-| Test Recall          | 0.49  |
+| Test Recall          | 0.51  |
 | Test Precision       | 0.52  |
 | Test F1              | 0.51  |
 
@@ -585,9 +600,9 @@ print(
 | -------------------- | ----- |
 | Cross-validation ROC | 0.746 |
 | Test ROC             | 0.746 |
-| Test Accuracy        | 0.76  |
-| Test Recall          | 0.55  |
-| Test Precision       | 0.48  |
+| Test Accuracy        | 0.77  |
+| Test Recall          | 0.54  |
+| Test Precision       | 0.49  |
 | Test F1              | 0.51  |
 
 ##### Logistic
@@ -604,6 +619,12 @@ XGBoost obtained the highest training and testing ROC scores. Note that Random F
 
 #### Random Forest VS XGBoost Performance Comparsion
 
+![RFC Final Model CM](https://user-images.githubusercontent.com/86807275/160730239-91eb513a-a190-4dac-b0b1-b4e252df1926.png)
+![RFC Final Model PR Curve](https://user-images.githubusercontent.com/86807275/160730241-00ca3b0d-e8d5-4205-94be-8a991d5205bd.png)
+![RFC Final Model ROC Curve](https://user-images.githubusercontent.com/86807275/160730242-3df819ef-aa43-44d1-aa4c-1227a9c45a9e.png)
+![xgb Final Model CM](https://user-images.githubusercontent.com/86807275/160730243-42253c3a-04a2-4aa3-82d4-320d8af30e9c.png)
+![xgb Final Model PR Curve](https://user-images.githubusercontent.com/86807275/160730244-9329b99d-671e-4922-87d5-af230dfe819f.png)
+![xgb Final Model ROC Curve](https://user-images.githubusercontent.com/86807275/160730245-1603fb37-fc6c-4544-8009-3659650ed5b2.png)
 
 
 ## Acknowledgements
